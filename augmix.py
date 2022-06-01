@@ -31,3 +31,13 @@ def augmix(image, augmentations, alpha=1., k=3, depth=3):
     # Interpolate the final result
     result = m * image + (1 - m) * result
     return result
+
+
+if __name__ == "__main__":
+    image = np.array(Image.open("img/example.jpg")).astype(np.float32) / 255.
+    print(Image.open("img/example.jpg").size)
+    plt.imshow(image)
+    plt.show()
+    image_aug = augmix(image, augmentations.augmentations)
+    plt.imshow(image_aug)
+    plt.show()
