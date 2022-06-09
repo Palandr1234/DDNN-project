@@ -1,9 +1,17 @@
 import numpy as np
-from utils import apply_operation
 from PIL import Image
 import matplotlib.pyplot as plt
-import augmentations
+# import augmentations
 
+
+def apply_operation(image, operation):
+    # rescale the image to the range [0, 255]
+    image = np.clip(image * 255., 0, 255).astype(np.uint8)
+    # Convert to PIL.Image
+    img = Image.fromarray(image)
+    # apply the operation
+    pil_img = operation(img)
+    return np.asarray(pil_img) / 255.
 
 def augmix(image, augmentations, alpha=1., k=3, depth=3):
     """
@@ -33,11 +41,11 @@ def augmix(image, augmentations, alpha=1., k=3, depth=3):
     return result
 
 
-if __name__ == "__main__":
-    image = np.array(Image.open("img/example.jpg")).astype(np.float32) / 255.
-    print(Image.open("img/example.jpg").size)
-    plt.imshow(image)
-    plt.show()
-    image_aug = augmix(image, augmentations.augmentations)
-    plt.imshow(image_aug)
-    plt.show()
+# if __name__ == "__main__":
+#     image = np.array(Image.open("img/example.jpg")).astype(np.float32) / 255.
+#     print(Image.open("img/example.jpg").size)
+#     plt.imshow(image)
+#     plt.show()
+#     image_aug = augmix(image, augmentations.augmentations)
+#     plt.imshow(image_aug)
+#     plt.show()
