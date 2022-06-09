@@ -15,12 +15,12 @@ def apply_operation(image, operation):
 def augmix(image, augmentations, alpha=1., k=3, depth=3):
     """
     Augment and mix technique
-    :param image: image to be transformed
-    :param augmentations:
+    :param image: image to be transformed, np.array of shape [h, w, c] if c>1 and [h,w] otherwise
+    :param augmentations: list of possible augmentations (each augmentation takes and outputs PIL.Image
     :param alpha: coefficient for Beta and Dirichlet distributions
     :param k: width of augmentation chain
     :param depth: depth of augmentation chain
-    :return: Transformed image
+    :return: Transformed image, np.array with the same shape as initial image
     """
     # Fill augmented image with zeros
     result = np.zeros_like(image).astype(np.float32)
