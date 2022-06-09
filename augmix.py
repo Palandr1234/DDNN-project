@@ -1,7 +1,5 @@
 import numpy as np
 from PIL import Image
-import matplotlib.pyplot as plt
-# import augmentations
 
 
 def apply_operation(image, operation):
@@ -12,6 +10,7 @@ def apply_operation(image, operation):
     # apply the operation
     pil_img = operation(img)
     return np.asarray(pil_img) / 255.
+
 
 def augmix(image, augmentations, alpha=1., k=3, depth=3):
     """
@@ -39,13 +38,3 @@ def augmix(image, augmentations, alpha=1., k=3, depth=3):
     # Interpolate the final result
     result = m * image + (1 - m) * result
     return result
-
-
-# if __name__ == "__main__":
-#     image = np.array(Image.open("img/example.jpg")).astype(np.float32) / 255.
-#     print(Image.open("img/example.jpg").size)
-#     plt.imshow(image)
-#     plt.show()
-#     image_aug = augmix(image, augmentations.augmentations)
-#     plt.imshow(image_aug)
-#     plt.show()
