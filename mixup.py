@@ -1,5 +1,7 @@
-import numpy as np
 import torch
+import torchvision.transforms as transforms
+from PIL import Image
+import matplotlib.pyplot as plt
 
 
 def mixup(inputs, outputs=None, device="cpu", lam=0.5):
@@ -26,3 +28,21 @@ def mixup(inputs, outputs=None, device="cpu", lam=0.5):
         outputs_mixed = None
 
     return inputs_mixed, outputs_mixed
+
+
+if __name__ == "__main__":
+    transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Resize((225, 225))
+    ])
+    images = [Image.open("img/example.jpg"), Image.open("img/example2.jpg"),
+              Image.open("img/example3.jpg")]
+    for i, img in enumerate(images):
+        images[i] = transform(images[i])
+
+    images = torch.stack(images).float() / 255.
+    print(images.shape)
+    image_aug, _ = mixup(images)
+    for img in image_aug:
+        plt.imshow(img.permute(1, 2, 0)*255.)
+        plt.show()
